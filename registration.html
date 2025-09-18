@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registration Page</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .registration-container {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 350px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .input-group {
+      margin-bottom: 18px;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      color: #555;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    .password-wrapper {
+      position: relative;
+    }
+    .toggle-password {
+      position: absolute;
+      right: 10px;
+      top: 9px;
+      cursor: pointer;
+      user-select: none;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #228b22;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #176d13;
+    }
+    .login-link {
+      text-align: center;
+      margin-top: 12px;
+    }
+    .login-link a {
+      color: #228b22;
+      text-decoration: none;
+    }
+    .error-message {
+      color: red;
+      margin-top: 10px;
+      font-size: 0.9em;
+      text-align: center;
+    }
+    .success-message {
+      color: green;
+      margin-top: 10px;
+      font-size: 0.9em;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="registration-container">
+    <h2>Registration</h2>
+    <form id="registrationForm">
+      <div class="input-group">
+        <label for="fullname">Full Name</label>
+        <input type="text" id="fullname" name="fullname" required />
+      </div>
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+      <div class="input-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required />
+      </div>
+      <div class="input-group">
+        <label for="password">Password</label>
+        <div class="password-wrapper">
+          <input type="password" id="password" name="password" required />
+          <span class="toggle-password" id="togglePassword">👁️</span>
+        </div>
+      </div>
+      <button type="submit">Register</button>
+      <div class="login-link">
+        <a href="login.html">Already have an account? Login</a>
+      </div>
+      <p id="message" class="error-message"></p>
+    </form>
+  </div>
+  <script>
+    // Toggle password visibility
+    document.getElementById("togglePassword").addEventListener("click", function () {
+      const passwordField = document.getElementById("password");
+      const type = passwordField.getAttribute("type");
+      if (type === "password") {
+        passwordField.setAttribute("type", "text");
+        this.textContent = "🙈";
+      } else {
+        passwordField.setAttribute("type", "password");
+        this.textContent = "👁️";
+      }
+    });
+
+    // Simple registration validation
+    document.getElementById("registrationForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const fullname = document.getElementById("fullname").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const message = document.getElementById("message");
+
+      if (!fullname || !email || !username || !password) {
+        message.textContent = "Please fill all fields.";
+        message.className = "error-message";
+        return;
+      }
+
+      localStorage.setItem("user_username", username);
+      localStorage.setItem("user_password", password);
+      message.textContent = "Registration successful! You can now login.";
+      message.className = "success-message";
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
